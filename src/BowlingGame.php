@@ -4,13 +4,15 @@ namespace App;
 
 class BowlingGame
 {
-    public function roll()
-    {
+    protected array $rolls = [];
 
+    public function roll(int $pins)
+    {
+        $this->rolls[] = $pins;
     }
 
     public function score()
     {
-        return 0;
+        return array_sum($this->rolls);
     }
 }
