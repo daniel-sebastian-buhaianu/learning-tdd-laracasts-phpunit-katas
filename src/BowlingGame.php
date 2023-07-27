@@ -4,6 +4,8 @@ namespace App;
 
 class BowlingGame
 {
+    const FRAMES_PER_GAME = 10;
+
     protected array $rolls = [];
 
     public function roll(int $pins)
@@ -13,6 +15,24 @@ class BowlingGame
 
     public function score()
     {
-        return array_sum($this->rolls);
+        $score = 0;
+        $roll = 0;
+
+        foreach (range(1, self::FRAMES_PER_GAME) as $frame) {
+            // check for a spare
+            if ($this->rolls[$roll] + $this->rolls[$roll + 1] === 10) {
+                // we got a spare
+                $score += $this->rolls[$roll] + $this->rolls[$roll + 1];
+                $score += $this->rolls[$roll + 2];
+
+                $roll += 2;
+            } else {
+                $score += $this->rolls[$roll] + $this->rolls[$roll + 1];
+                
+                $roll += 2;
+            }
+        }
+
+        return $score;
     }
 }
