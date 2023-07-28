@@ -47,4 +47,23 @@ class BowlingGameTest extends TestCase
 
         $this->assertSame(26, $game->score());
     }
+
+    /** @test */
+    function it_awards_a_two_roll_bonus_for_every_strike()
+    {
+        $game = new BowlingGame();
+
+        $game->roll(10);
+        // score so far: 10 + 5 + 2 = 17 (strike bonus)
+
+        $game->roll(5);
+        $game->roll(2);
+        // score so far: 17 + 7 = 24 
+
+        foreach (range(1, 16) as $roll) {
+            $game->roll(0);
+        }
+
+        $this->assertSame(24, $game->score());
+    }
 }
