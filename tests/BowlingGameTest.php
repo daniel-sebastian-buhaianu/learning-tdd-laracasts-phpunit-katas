@@ -83,4 +83,21 @@ class BowlingGameTest extends TestCase
 
         $this->assertSame(15, $game->score());
     }
+
+    /** @test */
+    function a_strike_in_the_final_frame_grants_two_extra_balls()
+    {
+        $game = new BowlingGame();
+
+        foreach (range(1, 18) as $roll) {
+            $game->roll(0);
+        }
+
+        $game->roll(10);
+
+        $game->roll(10);
+        $game->roll(10);
+
+        $this->assertSame(30, $game->score());
+    }
 }
